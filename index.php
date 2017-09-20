@@ -77,13 +77,13 @@
         // function that generates a "hand" of cards for one person (no duplicates)
         $person = array(
             "name" => "Byun",
-            "profilePicUrl" => "./img/byun.jpg",
+            "imgUrl" => "./img/byun.jpg",
             "cards" => generateHand($deck)
             );
             
         function displayPerson($person) {
             // show profile pic
-            echo "<img src='".$person["profilePicUrl"]."'>"; 
+            echo "<img src='".$person["imgUrl"]."'>"; 
             
             
             // iterate through $person's "cards"
