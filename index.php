@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        
+        <link href="css/style.css" rel="stylesheet" type="text/css" />
     </head>
     <body>
         <?php 
@@ -9,6 +9,45 @@
         // [0, 1, 2, ..., 51]
         // map each number to a card 
         // generate a "hand" of cards
+        
+        function generateDeck() {
+            $cards = array();
+            for ($i = 0; $i < 52; $i++) {
+                array_push($cards, $i);
+            }
+            shuffle($cards);
+            
+            return $cards;
+        }
+        
+        // Return a specific number of cards
+        // Passes the deck by reference so that the cards are actually popped off in the global
+        function generateHand(&$deck) {
+            $hand = array();
+            $bust = false;
+            
+            $cardNum = array_pop($deck);
+            $card = mapNumberToCard($cardNum);
+            array_push($hand, $card);
+            
+            while (!$bust) {
+                $sum = 0;
+                foreach ($hand as $hands) {
+                    $sum += valueOfCard($hands);
+                }
+                $cardNum = array_pop($deck);
+                $card = mapNumberToCard($cardNum);
+                $newcard = valueOfCard($cardNum);
+                if ($sum + $newcard > 43) {
+                    $bust = true;
+                }
+                else {
+                    array_push($hand, $card);
+                }
+            }
+            
+            return $hand;
+        }
         
         function mapNumberToCard($num) {
             $cardValue = ($num % 13) + 1;
@@ -39,46 +78,17 @@
             return $card;
         }
         
-        
-        function generateDeck() {
-            $cards = array();
-            for ($i = 0; $i < 52; $i++) {
-                array_push($cards, $i);
-            }
-            shuffle($cards);
+        function valueOfCard($num) {
+            $cardValue = ($num % 13) + 1;
             
-            return $cards;
+            return $cardValue;
         }
         
-        
-        function printDeck($deck) {
-            for ($i = 0; $i < count($deck); $i++) {
-                $cardNum = $deck[$i]; // number between 0 and 51
-                $card = mapNumberToCard($cardNum);
-                echo "imgURL: ".$card["imgURL"]."<br>";
-            }
-        }
-        
-        // Return a specific number of cards
-        function generateHand($deck) {
-            $hand = array();
-            
-            for ($i = 0; $i < 3; $i++) {
-                $cardNum = array_pop($deck);
-                $card = mapNumberToCard($cardNum);
-                array_push($hand, $card);
-            }
-            
-            return $hand;
-        }
-            
         function displayPerson($person) {
             // show profile pic
             echo "<img src='".$person["imgUrl"]."'>"; 
             
-            
             // iterate through $person's "cards"
-            
             for($i = 0; $i < count($person["cards"]); $i++) {
                 $card = $person["cards"][$i];
                 
@@ -99,31 +109,28 @@
             return $sum;
         }
         
-        $b_deck = generateDeck();
-        $k_deck = generateDeck();
-        $s_deck = generateDeck();
-        $a_deck = generateDeck();
+        $deck = generateDeck();
         
         //players and their information
         $byun = array(
             "name" => "Byun",
             "imgUrl" => "./img/byun.jpg",
-            "cards" => generateHand($b_deck)
+            "cards" => generateHand($deck)
             );
         $krzy = array(
             "name" => "Krzy",
             "imgUrl" => "./img/krzy.jpg",
-            "cards" => generateHand($k_deck)
+            "cards" => generateHand($deck)
             );
         $sathya = array(
             "name" => "Sathya",
             "imgUrl" => "./img/sathya.jpg",
-            "cards" => generateHand($s_deck)
+            "cards" => generateHand($deck)
             );
         $avner = array(
             "name" => "Avner",
             "imgUrl" => "./img/avner.jpg",
-            "cards" => generateHand($a_deck)
+            "cards" => generateHand($deck)
             );
         
         displayPerson($byun);
