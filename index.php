@@ -71,15 +71,6 @@
             
             return $hand;
         }
-        
-        $deck = generateDeck(); 
-        
-        // function that generates a "hand" of cards for one person (no duplicates)
-        $person = array(
-            "name" => "Byun",
-            "imgUrl" => "./img/byun.jpg",
-            "cards" => generateHand($deck)
-            );
             
         function displayPerson($person) {
             // show profile pic
@@ -108,7 +99,37 @@
             return $sum;
         }
         
-        displayPerson($person);
+        $b_deck = generateDeck();
+        $k_deck = generateDeck();
+        $s_deck = generateDeck();
+        $a_deck = generateDeck();
+        
+        //players and their information
+        $byun = array(
+            "name" => "Byun",
+            "imgUrl" => "./img/byun.jpg",
+            "cards" => generateHand($b_deck)
+            );
+        $krzy = array(
+            "name" => "Krzy",
+            "imgUrl" => "./img/krzy.jpg",
+            "cards" => generateHand($k_deck)
+            );
+        $sathya = array(
+            "name" => "Sathya",
+            "imgUrl" => "./img/sathya.jpg",
+            "cards" => generateHand($s_deck)
+            );
+        $avner = array(
+            "name" => "Avner",
+            "imgUrl" => "./img/avner.jpg",
+            "cards" => generateHand($a_deck)
+            );
+        
+        displayPerson($byun);
+        displayPerson($krzy);
+        displayPerson($sathya);
+        displayPerson($avner);
         ?>
     </body>
 </html>
