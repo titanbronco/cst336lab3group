@@ -10,14 +10,14 @@
         // map each number to a card 
         // generate a "hand" of cards
         
+        //$deck = array from 0-51, then shuffled (Random order)
         function generateDeck() {
             $cards = array();
             for ($i = 0; $i < 52; $i++) {
                 array_push($cards, $i);
             }
             shuffle($cards);
-            
-            return $cards;
+            return $cards; // stored into $deck
         }
         
         // Return a specific number of cards
@@ -25,27 +25,20 @@
         function generateHand(&$deck) {
             $hand = array();
             $bust = false;
-            
-            $cardNum = array_pop($deck);
-            $card = mapNumberToCard($cardNum);
-            array_push($hand, $card);
-            
-            while (!$bust) {
-                $sum = 0;
-                foreach ($hand as $hands) {
-                    $sum += valueOfCard($hands);
-                }
+            $sum = 0;
+            do {
+                // draw card and apply to person's hand
                 $cardNum = array_pop($deck);
                 $card = mapNumberToCard($cardNum);
-                $newcard = valueOfCard($cardNum);
-                if ($sum + $newcard > 43) {
-                    $bust = true;
-                }
-                else {
-                    array_push($hand, $card);
-                }
-            }
-            
+                array_push($hand, $card);
+                
+                // get current sum of hand value
+                $sum += $card['num'];
+                
+                // get next hand value if another card is drawn
+                $nextcard = end($deck);
+                $nextcardvalue = mapNumberToCard($nextcard)['num'];//echo $nextcardvalue = mapNumberToCard($nextcard)['num'];
+            } while ($nextcardvalue + $sum < 43); // if next hand value is 42 or lower, loop.
             return $hand;
         }
         
@@ -79,9 +72,10 @@
         }
         
         function valueOfCard($num) {
-            $cardValue = ($num % 13) + 1;
-            
-            return $cardValue;
+            $tempcardValue = ($num % 13) + 1;
+            echo $cardValue;
+            echo nl2br ("\n");
+            return $tempcardValue;
         }
         
         function displayPerson($person) {
@@ -134,8 +128,11 @@
             );
         
         displayPerson($byun);
+        echo  nl2br ("\n"); // this is a line break,
         displayPerson($krzy);
+        echo  nl2br ("\n");
         displayPerson($sathya);
+        echo  nl2br ("\n");
         displayPerson($avner);
         ?>
     </body>
