@@ -104,9 +104,16 @@
             return $sum;
         }
         
+        function displayWinner($winner) {
+            // show profile pic
+            echo "<img src='".$winner["person"]["imgUrl"]."'>"; 
+            
+            
+            echo $winner["handValue"];
+        }
+        
         $deck = generateDeck();
         
-        $winners = array($champ=array($person, $handValue = 0));
         
         //players and their information
         //makes an array of the players with their info and shuffles them for random display
@@ -130,17 +137,30 @@
             "imgUrl" => "./img/avner.jpg",
             "cards" => generateHand($deck)
             ));
+            
+        $winners = array(
+            "champ"=>array(
+                "person"=> " ", "handValue" =>0));
         
         shuffle($players);
         foreach($players as &$person){
-            displayPerson($person);
+            $disPlayer = displayPerson($person);
         echo  nl2br ("\n");
-        if(displayPerson($person) > $winners["handValue"]){
-            array_pop($winners);
-            $winna = array($person, displayPerson($person));
-            array_push($winners, $winna);
+        if($disPlayer > $winners["champ"][0]["handValue"]){
+            $winners["champ"][0]["person"] = $person;
+            $winners["champ"][0]["handValue"] = $disPlayer;
+        }
+        else if($disPlayer == $winners["champs"][0]["handValue"]){
+            $winners["champ"]["person"] = $person;
+            $winners["champ"]["handValue"] = $disPlayer;
         }
         };
+        
+       echo "WINNERS!";
+        
+        for($i = 0; $i < count($winners); $i++){
+            displayWinner($winners["champ"][$i]);
+        }
         
         
         ?>
