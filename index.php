@@ -91,6 +91,7 @@
             }
             
             echo calculateHandValue($person["cards"]);
+            return calculateHandValue($person["cards"]);
         }
         
         function calculateHandValue($cards) {
@@ -104,6 +105,8 @@
         }
         
         $deck = generateDeck();
+        
+        $winners = array($champ=array($person, $handValue = 0));
         
         //players and their information
         //makes an array of the players with their info and shuffles them for random display
@@ -132,7 +135,14 @@
         foreach($players as &$person){
             displayPerson($person);
         echo  nl2br ("\n");
+        if(displayPerson($person) > $winners["handValue"]){
+            array_pop($winners);
+            $winna = array($person, displayPerson($person));
+            array_push($winners, $winna);
+        }
         };
+        
+        
         ?>
     </body>
 </html>
