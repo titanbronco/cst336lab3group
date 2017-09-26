@@ -82,6 +82,8 @@
             // show profile pic
             echo "<img src='".$person["imgUrl"]."'>"; 
             
+            echo $person["name"];
+            
             // iterate through $person's "cards"
             for($i = 0; $i < count($person["cards"]); $i++) {
                 $card = $person["cards"][$i];
@@ -91,6 +93,7 @@
             }
             
             echo calculateHandValue($person["cards"]);
+            return calculateHandValue($person["cards"]);
         }
         
         function calculateHandValue($cards) {
@@ -103,37 +106,65 @@
             return $sum;
         }
         
+        function displayWinner($winner) {
+            // show profile pic
+            echo "<img src='".$winner["person"]["imgUrl"]."'>"; 
+            echo $winner["person"]["name"];
+            
+            echo $winner["handValue"];
+        }
+        
         $deck = generateDeck();
         
+        
         //players and their information
-        $byun = array(
+        //makes an array of the players with their info and shuffles them for random display
+       $players = array($byun = array(
             "name" => "Byun",
             "imgUrl" => "./img/byun.jpg",
             "cards" => generateHand($deck)
-            );
+            ),
         $krzy = array(
             "name" => "Krzy",
             "imgUrl" => "./img/krzy.jpg",
             "cards" => generateHand($deck)
-            );
+            ),
         $sathya = array(
             "name" => "Sathya",
             "imgUrl" => "./img/sathya.jpg",
             "cards" => generateHand($deck)
-            );
+            ),
         $avner = array(
             "name" => "Avner",
             "imgUrl" => "./img/avner.jpg",
             "cards" => generateHand($deck)
-            );
+            ));
+            
+        $winners = array(
+            "champ"=>array(
+                "person"=> " ", "handValue" =>0));
         
-        displayPerson($byun);
-        echo  nl2br ("\n"); // this is a line break,
-        displayPerson($krzy);
+        shuffle($players);
+        foreach($players as &$person){
+            $disPlayer = displayPerson($person);
         echo  nl2br ("\n");
-        displayPerson($sathya);
-        echo  nl2br ("\n");
-        displayPerson($avner);
+        if($disPlayer > $winners["champ"][0]["handValue"]){
+            $winners["champ"][0]["person"] = $person;
+            $winners["champ"][0]["handValue"] = $disPlayer;
+        }
+        else if($disPlayer == $winners["champs"][0]["handValue"]){
+            $winners["champ"]["person"] = $person;
+            $winners["champ"]["handValue"] = $disPlayer;
+        }
+        };
+        
+       echo "WINNERS!";
+        
+        for($i = 0; $i < count($winners); $i++){
+            displayWinner($winners["champ"][$i]);
+        }
+        
+        
         ?>
     </body>
 </html>
