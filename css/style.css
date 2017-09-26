@@ -1,0 +1,26 @@
+body img {
+    max-width: 120px;
+}
+
+body{
+    text-align: center;
+    
+}
+table{
+    padding-left: 30%;
+}
+.t1{
+    font-size: 35px;
+    color: white;
+}
+.name{
+    font-size: 200%;
+    color: yellow;
+}
+.button{
+    height:35px;
+    width:200px;
+    background-color: #1F521F;
+    color: #FFFFFF;
+    text-transform:uppercase;
+}
