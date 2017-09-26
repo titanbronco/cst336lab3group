@@ -82,6 +82,8 @@
             // show profile pic
             echo "<img src='".$person["imgUrl"]."'>"; 
             
+            echo $person["name"];
+            
             // iterate through $person's "cards"
             for($i = 0; $i < count($person["cards"]); $i++) {
                 $card = $person["cards"][$i];
@@ -107,7 +109,7 @@
         function displayWinner($winner) {
             // show profile pic
             echo "<img src='".$winner["person"]["imgUrl"]."'>"; 
-            
+            echo $winner["person"]["name"];
             
             echo $winner["handValue"];
         }
