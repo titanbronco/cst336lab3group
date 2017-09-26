@@ -3,7 +3,8 @@
     <head>
         <link href="css/style.css" rel="stylesheet" type="text/css" />
     </head>
-    <body>
+    <body background="img/casino.jpg">
+        <header class="t1">Silverjack</header>
         <?php 
         // Generate a deck of cards 
         // [0, 1, 2, ..., 51]
@@ -80,19 +81,31 @@
         
         function displayPerson($person) {
             // show profile pic
-            echo "<img src='".$person["imgUrl"]."'>"; 
+            echo "<table>";
             
+            echo "<tr>";
+            echo "<td class='name'>";
+            echo "<img class='player-pic' src='".$person["imgUrl"]."'>"; 
+            echo "&nbsp; &nbsp; <br>";
             echo $person["name"];
+            echo "<td/>";
             
             // iterate through $person's "cards"
+            
             for($i = 0; $i < count($person["cards"]); $i++) {
                 $card = $person["cards"][$i];
                 
                 // translate this to HTML 
-                echo "<img src='".$card["imgURL"]."'>";
+                echo "<td>";
+                echo "<img src='".$card["imgURL"]."'/>";
+                echo "<td/>";
             }
-            
+            echo "<td class='t1'>";
             echo calculateHandValue($person["cards"]);
+            echo "<td/>";
+            echo "<tr>";
+            echo "<table/>";
+            
             return calculateHandValue($person["cards"]);
         }
         
@@ -108,10 +121,13 @@
         
         function displayWinner($winner) {
             // show profile pic
+            echo "<div class='t1'>";
             echo "<img src='".$winner["person"]["imgUrl"]."'>"; 
-            echo $winner["person"]["name"];
+            echo "&nbsp; &nbsp; <br>";
+            echo $winner["person"]["name"]. " is the winner with the score : ";
             
             echo $winner["handValue"];
+            echo "</div>";
         }
         
         $deck = generateDeck();
@@ -158,13 +174,15 @@
         }
         };
         
-       echo "WINNERS!";
-        
         for($i = 0; $i < count($winners); $i++){
             displayWinner($winners["champ"][$i]);
         }
         
-        
         ?>
+        <div class= 'bottom' align = 'center'>
+                <form action="index.php" method="POST">
+                    <input class='button' type ="submit" value="Play Again!"/>
+                </form>
+        </div>
     </body>
 </html>
